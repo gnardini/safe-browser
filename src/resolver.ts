@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { getCidInBase32, getCidInBase32ForIpns } from "./ipfs";
 // @ts-ignore
-const { exec: execCommand } = require("child_process");
+const { exec } = require("child_process");
 
 const RPC_URL = "https://cloudflare-eth.com/";
 
@@ -23,5 +23,5 @@ export async function openEns(ens: string) {
     return;
   }
   const url = `http://${base32Cid}.ipfs.localhost:8080`;
-  execCommand(`open ${url}`);
+  exec(`open ${url}`);
 }
