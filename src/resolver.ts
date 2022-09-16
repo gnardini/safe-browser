@@ -1,16 +1,14 @@
 import { ethers } from "ethers";
-import { getCidInBase32, getCidInBase32ForIpns, startIpfs } from "./ipfs";
+import { getCidInBase32, getCidInBase32ForIpns } from "./ipfs";
 // @ts-ignore
-const { exec } = require("child_process");
+const { exec: execCommand } = require("child_process");
 
 const RPC_URL = "https://cloudflare-eth.com/";
 
 const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 
-async function main() {
-  await startIpfs();
-
-  const resolver = await provider.getResolver("curve.eth");
+export async function openEns(ens: string) {
+  const resolver = await provider.getResolver(ens);
   const content = await resolver?.getContentHash();
 
   console.info(content);
@@ -25,9 +23,5 @@ async function main() {
     return;
   }
   const url = `http://${base32Cid}.ipfs.localhost:8080`;
-  exec(`open ${url}`);
+  execCommand(`open ${url}`);
 }
-
-main()
-  .then(() => console.log("Finished"))
-  .catch(console.error);

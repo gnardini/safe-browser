@@ -5,12 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "yarn build && node --experimental-specifier-resolution=node dist/index.js"
+    "start": "yarn build && npx electron ./dist/main.js"
   },
   "dependencies": {
-    "@ensdomains/ensjs": "^3.0.0-alpha.20",
     "axios": "^0.21.1",
-    "bignumber.js": "^9.0.1",
     "child_process": "^1.0.2",
     "ethers": "^5.6.9"
   },
@@ -19,6 +17,7 @@
     "@typescript-eslint/parser": "^4.28.3",
     "@valora/eslint-config-typescript": "^0.0.1",
     "@valora/prettier-config": "^0.0.1",
+    "electron": "^20.1.4",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.24.2",
     "prettier": "^2.4.1",

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'"
+    />
+
+  </head>
+  <body>
+    <h1>Safe browser</h1>
+    <label>Dapp's ens domain:
+        <input class="ens-domain"></input>
+    </label>
+    <button id="search-ipfs">Search</button>
+
+    <script>var exports = {"__esModule": true};</script>
+
+    <script src="./dist/ipfs.js"></script>
+    <script src="./dist/resolver.js"></script>
+    <script src="./dist/renderer.js"></script>
+  </body>
+</html>
