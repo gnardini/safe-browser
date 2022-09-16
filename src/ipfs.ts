@@ -26,13 +26,23 @@ async function installIpfsIfNeeded() {
 }
 
 async function isIpfsInstalled() {
-  const { stderr } = await asyncExec("ipfs --version")
-  return !stderr.includes("not found")
+  try {
+    await asyncExec("ipfs --version")
+  } catch(e) {
+    return false
+  }
+  return true
 }
 
 export async function startIpfs() {
   await installIpfsIfNeeded();
   asyncExec("ipfs daemon")
+    .catch(e => {
+      if (!e.stderr.includes('someone else has the lock')) {
+        throw new Error('Unexpected error while initilizing ipfs daemon')
+      }
+    })
+    .finally(() => console.log('Killing Daemon'))
 }
 
 export async function getCidInBase32(hash: string): Promise<string> {
