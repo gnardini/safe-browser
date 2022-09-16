@@ -26,8 +26,12 @@ async function installIpfsIfNeeded() {
 }
 
 async function isIpfsInstalled() {
-  const { stderr } = await asyncExec("ipfs --version")
-  return !stderr.includes("ipfs: command not found")
+  try {
+    await asyncExec("ipfs --version")
+  } catch(e) {
+    return false
+  }
+  return true
 }
 
 export async function startIpfs() {
@@ -35,7 +39,6 @@ export async function startIpfs() {
   asyncExec("ipfs daemon")
     .catch(e => {
       if (!e.stderr.includes('someone else has the lock')) {
-        console.error(e)
         throw new Error('Unexpected error while initilizing ipfs daemon')
       }
     })
