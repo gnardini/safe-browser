@@ -35,6 +35,7 @@ export async function startIpfs() {
   asyncExec("ipfs daemon")
     .catch(e => {
       if (!e.stderr.includes('someone else has the lock')) {
+        console.error(e)
         throw new Error('Unexpected error while initilizing ipfs daemon')
       }
     })
