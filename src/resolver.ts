@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { getCidInBase32, getCidInBase32ForIpns } from "./ipfs";
+import { getCidInBase32, getCidInBase32ForIpns, LINUX } from "./ipfs";
 // @ts-ignore
 const { exec } = require("child_process");
 
@@ -14,14 +14,15 @@ export async function openEns(ens: string) {
   console.info(content);
   const [protocol, hash] = content?.split("://") ?? [];
 
-  const base32Cid =
-    protocol === "ipfs"
-      ? await getCidInBase32(hash)
-      : await getCidInBase32ForIpns(hash);
+  const base32Cid = protocol === "ipfs" ? await getCidInBase32(hash) : await getCidInBase32ForIpns(hash);
   if (!base32Cid) {
     console.error("CID not found");
     return;
   }
   const url = `http://${base32Cid}.ipfs.localhost:8080`;
+  if (process.platform === LINUX) {
+    exec(`xdg-open ${url}`);
+    return;
+  }
   exec(`open ${url}`);
 }

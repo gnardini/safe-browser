@@ -1,9 +1,9 @@
 // @ts-ignore
 const { exec } = require("child_process");
 
-const LINUX = 'linux'
-const WINDOWS = 'win32'
-const MAC = 'darwin'
+export const LINUX = 'linux'
+export const WINDOWS = 'win32'
+export const MAC = 'darwin'
 
 async function installIpfsIfNeeded() {
   if (await isIpfsInstalled()) {
@@ -27,7 +27,7 @@ async function installIpfsIfNeeded() {
 
 async function isIpfsInstalled() {
   const { stderr } = await asyncExec("ipfs --version")
-  return !stderr.includes("ipfs: command not found")
+  return !stderr.includes("not found")
 }
 
 export async function startIpfs() {
@@ -65,8 +65,8 @@ async function installIpfsForARMMac() {
 async function installIpfsForLinux() {
   console.log('Installing IPFS for Linux')
   await asyncExec("mkdir -p ipfs && cd ipfs && wget https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_linux-amd64.tar.gz")
-  await asyncExec("cd ipfs && tar -xvzf ipfs/kubo_v0.15.0_darwin-arm64.tar.gz")
-  await asyncExec("cd ipfs/kubo && sudo bash install.sh")
+  await asyncExec("tar -xvzf ipfs/kubo_v0.15.0_linux-amd64.tar.gz")
+  await asyncExec("cd kubo && sudo bash install.sh")
   await asyncExec("ipfs init")
 }
 
@@ -81,7 +81,7 @@ function asyncExec(command: string): Promise<ExecResponse> {
     exec(command, (err: any, stdout: any, stderr: any) => {
       if (!!err) {
         console.error(err);
-        reject({ err, stdout, stderr })
+        resolve({ err, stdout, stderr })
       }
       resolve({ err, stdout, stderr })
     })
