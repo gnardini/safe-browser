@@ -2,10 +2,13 @@
   "name": "safe-browser",
   "version": "0.1.0",
   "private": true,
-  "main": "dist/index.js",
+  "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "yarn build && npx electron ./dist/main.js"
+    "start": "yarn build && npx electron ./dist/main.js",
+    "startElectron": "electron-forge start",
+    "packageElectron": "electron-forge package",
+    "makeElectron": "electron-forge make"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -22,6 +25,38 @@
     "eslint-plugin-import": "^2.24.2",
     "prettier": "^2.4.1",
     "typescript": "^4.6.4",
-    "@types/node": "18.7.18"
+    "@types/node": "18.7.18",
+    "@electron-forge/cli": "^6.0.0-beta.66",
+    "@electron-forge/maker-deb": "^6.0.0-beta.66",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.66",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.66",
+    "@electron-forge/maker-zip": "^6.0.0-beta.66"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Safe Browser"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
