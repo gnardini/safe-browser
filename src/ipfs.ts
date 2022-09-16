@@ -1,15 +1,28 @@
 // @ts-ignore
 const { exec } = require("child_process");
 
+const LINUX = 'linux'
+const WINDOWS = 'win32'
+const MAC = 'darwin'
+
 async function installIpfsIfNeeded() {
   if (await isIpfsInstalled()) {
     console.log("IPFS already installed");
     return;
   }
 
-  await installIpfsForAMDMac();
-  // await installIpfsForMac();
-  // await installIpfsForLinux();
+  switch (process.platform) {
+    case LINUX:
+      return await installIpfsForLinux();
+    case WINDOWS:
+      throw new Error('Not yet implemented')
+    case MAC:
+      if (process.arch.includes('arm')) {
+        return await installIpfsForARMMac();
+      } else {
+        return await installIpfsForAMDMac();
+      }
+  }
 }
 
 async function isIpfsInstalled() {
@@ -34,13 +47,15 @@ export async function getCidInBase32ForIpns(hash: string) {
 }
 
 async function installIpfsForAMDMac() {
-    await asyncExec("mkdir -p ipfs && cd ipfs && curl -O https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_darwin-amd64.tar.gz")
-    await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-amd64.tar.gz")
-    await asyncExec("cd ipfs/kubo && sudo bash install.sh")
-    await asyncExec("ipfs init")
+  console.log('Installing IPFS for AMD Mac')
+  await asyncExec("mkdir -p ipfs && cd ipfs && curl -O https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_darwin-amd64.tar.gz")
+  await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-amd64.tar.gz")
+  await asyncExec("cd ipfs/kubo && sudo bash install.sh")
+  await asyncExec("ipfs init")
 }
 
-async function installIpfsForMac() {
+async function installIpfsForARMMac() {
+  console.log('Installing IPFS for ARM Mac')
   await asyncExec("mkdir -p ipfs && cd ipfs && curl -O https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_darwin-arm64.tar.gz")
   await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-arm64.tar.gz")
   await asyncExec("cd ipfs/kubo && sudo bash install.sh")
@@ -48,6 +63,7 @@ async function installIpfsForMac() {
 }
 
 async function installIpfsForLinux() {
+  console.log('Installing IPFS for Linux')
   await asyncExec("mkdir -p ipfs && cd ipfs && wget https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_linux-amd64.tar.gz")
   await asyncExec("cd ipfs && tar -xvzf ipfs/kubo_v0.15.0_darwin-arm64.tar.gz")
   await asyncExec("cd ipfs/kubo && sudo bash install.sh")
@@ -57,7 +73,7 @@ async function installIpfsForLinux() {
 interface ExecResponse {
   err: any,
   stdout: any,
-  stderr: any 
+  stderr: any
 }
 
 function asyncExec(command: string): Promise<ExecResponse> {
@@ -65,9 +81,9 @@ function asyncExec(command: string): Promise<ExecResponse> {
     exec(command, (err: any, stdout: any, stderr: any) => {
       if (!!err) {
         console.error(err);
-        reject({err, stdout, stderr})
+        reject({ err, stdout, stderr })
       }
-      resolve({err, stdout, stderr})
+      resolve({ err, stdout, stderr })
     })
   })
 }
