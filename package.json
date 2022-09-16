@@ -1,24 +1,27 @@
 {
-    "name": "safe-browser",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-      "build": "tsc"
-    },
-    "dependencies": {
-      "axios": "^0.21.1",
-      "bignumber.js": "^9.0.1",
-      "ethers": "^5.6.9"
-    },
-    "devDependencies": {
-      "@typescript-eslint/eslint-plugin": "^4.28.3",
-      "@typescript-eslint/parser": "^4.28.3",
-      "@valora/eslint-config-typescript": "^0.0.1",
-      "@valora/prettier-config": "^0.0.1",
-      "eslint": "^7.32.0",
-      "eslint-plugin-import": "^2.24.2",
-      "prettier": "^2.4.1",
-      "typescript": "^4.6.4"
-    }
+  "name": "safe-browser",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node --experimental-specifier-resolution=node dist/index.js"
+  },
+  "dependencies": {
+    "@ensdomains/ensjs": "^3.0.0-alpha.20",
+    "axios": "^0.21.1",
+    "bignumber.js": "^9.0.1",
+    "child_process": "^1.0.2",
+    "ethers": "^5.6.9"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "@valora/eslint-config-typescript": "^0.0.1",
+    "@valora/prettier-config": "^0.0.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.24.2",
+    "prettier": "^2.4.1",
+    "typescript": "^4.6.4"
   }
-  
+}
