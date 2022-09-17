@@ -1,6 +1,5 @@
 // @ts-ignore
 const { exec } = require("child_process");
-var sudo = require("sudo-prompt");
 
 export const LINUX = "linux";
 export const WINDOWS = "win32";
@@ -64,7 +63,7 @@ async function installIpfsForAMDMac() {
     "mkdir -p ipfs && cd ipfs && curl -O https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_darwin-amd64.tar.gz"
   );
   await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-amd64.tar.gz");
-  await sudoForMacExec("cd ipfs/kubo && bash install.sh");
+  await asyncExec("cd ipfs/kubo && bash install.sh");
   await initIpfs();
 }
 
@@ -74,7 +73,7 @@ async function installIpfsForARMMac() {
     "mkdir -p ipfs && cd ipfs && curl -O https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_darwin-arm64.tar.gz"
   );
   await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-arm64.tar.gz");
-  await sudoForMacExec("cd ipfs/kubo && bash install.sh");
+  await asyncExec("cd ipfs/kubo && bash install.sh");
   await initIpfs();
 }
 
@@ -85,8 +84,7 @@ async function installIpfsForLinux() {
   );
   await asyncExec("tar -xvzf ipfs/kubo_v0.15.0_linux-amd64.tar.gz");
 
-  const { stdout } = await asyncExec("pwd");
-  await sudoExec(`cd ${stdout.trim}/kubo && bash install.sh`);
+  await asyncExec(`cd kubo && bash install.sh`);
 
   await initIpfs();
 }
@@ -117,21 +115,4 @@ function asyncExec(command: string): Promise<ExecResponse> {
       resolve({ err, stdout, stderr });
     });
   });
-}
-
-async function sudoExec(command: string): Promise<ExecResponse> {
-  return new Promise((resolve, reject) => {
-    sudo.exec(command, { name: "Sekura" }, (err: any, stdout: any, stderr: any) => {
-      if (!!err) {
-        console.error(err);
-        reject({ err, stdout, stderr });
-      }
-      resolve({ err, stdout, stderr });
-    });
-  });
-}
-
-async function sudoForMacExec(command: string): Promise<ExecResponse> {
-  var prompt = `/usr/bin/osascript -e 'do shell script "bash -c \\\"${command}\\\"" with administrator privileges'`;
-  return await asyncExec(prompt);
 }
