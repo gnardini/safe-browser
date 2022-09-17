@@ -19,7 +19,10 @@ isIpfsInstalled().then((isInstalled: boolean) => {
   loading.style.display = isInstalled ? "none" : "inline-block";
   main.style.display = !isInstalled ? "none" : "inline-block";
 
-  startIpfs();
+  startIpfs().catch((e: any) => {
+    console.error('Start IPFS failed')
+    console.error(e)
+  });
 });
 
 const searchButton = document.querySelector("#search-ipfs");
