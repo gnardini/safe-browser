@@ -7,6 +7,20 @@
 
 // @ts-ignore
 import { openEns } from "./dist/resolver";
+// @ts-ignore
+import { isIpfsInstalled, startIpfs } from "./dist/ipfs";
+
+const splash = document.querySelector("#splash") as HTMLElement;
+const loading = document.querySelector("#loading") as HTMLElement;
+const main = document.querySelector("#main") as HTMLElement;
+
+isIpfsInstalled().then((isInstalled: boolean) => {
+  splash.style.display = "none";
+  loading.style.display = isInstalled ? "none" : "inline-block";
+  main.style.display = !isInstalled ? "none" : "inline-block";
+
+  startIpfs();
+});
 
 const searchButton = document.querySelector("#search-ipfs");
 
