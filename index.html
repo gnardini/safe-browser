@@ -15,17 +15,16 @@
 </head>
 
 <body>
-  <div id="splash">
+  <div id="loading">
     <h1>Sekura</h1>
-  </div>
-  <div id="loading" hidden>
-    Loading
+    <div class="loading-text">Loading...</div>
+    <div class="loading-desc">The first time you open the app might take a bit longer for the initial setup</div>
   </div>
   <div id="main" hidden>
     <div class="search-container">
       <h1>Sekura</h1>
       <div class="search-form">
-        <label for="ens-domain">ENS DOMAIN</label>
+        <label for="ens-domain" class="label">ENS DOMAIN (must end with .eth)</label>
         <input id="ens-domain" class="ens-domain"/>
         <button id="search-ipfs">Search</button>
       </div>
