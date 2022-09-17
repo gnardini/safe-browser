@@ -62,7 +62,7 @@ async function installIpfsForAMDMac() {
     "mkdir -p ipfs && cd ipfs && curl -O https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_darwin-amd64.tar.gz"
   );
   await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-amd64.tar.gz");
-  await asyncExec("cd ipfs/kubo && sudo bash install.sh");
+  await sudoForMacExec("cd ipfs/kubo && bash install.sh");
   await asyncExec("ipfs init");
 }
 
@@ -72,7 +72,7 @@ async function installIpfsForARMMac() {
     "mkdir -p ipfs && cd ipfs && curl -O https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_darwin-arm64.tar.gz"
   );
   await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-arm64.tar.gz");
-  await asyncExec("cd ipfs/kubo && sudo bash install.sh");
+  await sudoForMacExec("cd ipfs/kubo && bash install.sh");
   await asyncExec("ipfs init");
 }
 
@@ -102,4 +102,9 @@ function asyncExec(command: string): Promise<ExecResponse> {
       resolve({ err, stdout, stderr });
     });
   });
+}
+
+async function sudoForMacExec(command: string) {
+  var prompt = `/usr/bin/osascript -e 'do shell script "bash -c \\\"${command}\\\"" with administrator privileges'`
+  return await asyncExec(prompt)
 }

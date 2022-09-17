@@ -16,6 +16,12 @@
     "ethers": "^5.6.9"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.66",
+    "@electron-forge/maker-deb": "^6.0.0-beta.66",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.66",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.66",
+    "@electron-forge/maker-zip": "^6.0.0-beta.66",
+    "@types/node": "18.7.18",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "@valora/eslint-config-typescript": "^0.0.1",
@@ -24,13 +30,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.24.2",
     "prettier": "^2.4.1",
-    "typescript": "^4.6.4",
-    "@types/node": "18.7.18",
-    "@electron-forge/cli": "^6.0.0-beta.66",
-    "@electron-forge/maker-deb": "^6.0.0-beta.66",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.66",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.66",
-    "@electron-forge/maker-zip": "^6.0.0-beta.66"
+    "typescript": "^4.6.4"
   },
   "config": {
     "forge": {
