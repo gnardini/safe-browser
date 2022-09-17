@@ -19,24 +19,35 @@ isIpfsInstalled().then((isInstalled: boolean) => {
   loading.style.display = isInstalled ? "none" : "inline-block";
   main.style.display = !isInstalled ? "none" : "inline-block";
 
-  startIpfs().then(() => {
-    loading.style.display = "none";
-    main.style.display = "inline-block";
-  }).catch((e: any) => {
-    // mostrar mensaje de error
+  startIpfs()
+    .then(() => {
+      loading.style.display = "none";
+      main.style.display = "inline-block";
+    })
+    .catch((e: any) => {
+      // mostrar mensaje de error
 
-    console.error('Start IPFS failed')
-    console.error(e)
-  });
+      console.error("Start IPFS failed");
+      console.error(e);
+    });
 });
 
 const searchButton = document.querySelector("#search-ipfs");
+const popularApps = document.querySelectorAll(".popular-apps-list li");
 
-if (searchButton) {
-  searchButton.addEventListener("click", () => {
-    const ensDomain = document.querySelector(".ens-domain");
-    // @ts-ignore
-    const content = ensDomain.value;
-    openEns(content);
+searchButton?.addEventListener("click", () => {
+  const ensDomain = document.querySelector(".ens-domain");
+  // @ts-ignore
+  const content = ensDomain.value;
+  openEns(content);
+});
+
+popularApps?.forEach((app) => {
+  app.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (target) {
+      const ensDomain = target.dataset.ensDomain;
+      openEns(ensDomain);
+    }
   });
-}
+});

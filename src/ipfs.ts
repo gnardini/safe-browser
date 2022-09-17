@@ -86,7 +86,7 @@ async function installIpfsForLinux() {
   await asyncExec("tar -xvzf ipfs/kubo_v0.15.0_linux-amd64.tar.gz");
 
   const { stdout } = await asyncExec("pwd");
-  await sudoExec(`cd ${stdout.trim}/kubo && bash install.sh`);
+  await sudoExec(`cd ${stdout.trim()}/kubo && bash install.sh`);
 
   await initIpfs();
 }
