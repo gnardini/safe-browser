@@ -21,8 +21,10 @@ compoundprotocol.eth
 synthetixexchange.eth  
 esteroids.eth  
 tornadocash.eth  
-ubi.eth  
-
+1inch.eth  
+hermesprotocol.eth (Metis)  
+spookyfi.eth (Fantom)  
+  
 You can find more on esteroids.eth, most of the websites published there work
 
 ### Not working:  
