@@ -1,5 +1,5 @@
 {
-  "name": "safe-browser",
+  "name": "sekura",
   "version": "0.1.0",
   "private": true,
   "main": "dist/main.js",
