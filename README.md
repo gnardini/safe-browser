@@ -1,4 +1,4 @@
-# Safe Browser
+# Sekura
 
 Browse websites safely without fear of DNS hijacking or censorship.
 

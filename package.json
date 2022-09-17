@@ -42,7 +42,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Safe Browser"
+            "name": "Sekura"
           }
         },
         {
