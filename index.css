@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap");
 
 * {
   font-family: "Montserrat", sans-serif;
@@ -6,6 +5,7 @@
 
 html {
   height: 100%;
+  margin: 0;
 }
 
 body {
@@ -13,6 +13,7 @@ body {
   justify-content: center;
   width: 100%;
   height: 100%;
+  margin: 0;
 }
 
 h1 {
@@ -51,4 +52,12 @@ button {
   width: 60%;
   margin-top: 10px;
   align-self: center;
+}
+
+#splash {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
