@@ -25,7 +25,7 @@ async function installIpfsIfNeeded() {
   }
 }
 
-async function isIpfsInstalled() {
+export async function isIpfsInstalled() {
   try {
     await asyncExec("ipfs --version");
     return true;
@@ -72,7 +72,7 @@ async function installIpfsForARMMac() {
     "mkdir -p ipfs && cd ipfs && curl -O https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_darwin-arm64.tar.gz"
   );
   await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-arm64.tar.gz");
-  await sudoForMacExec("cd ipfs/kubo && bash install.sh");
+  await asyncExec("cd ipfs/kubo && bash install.sh");
   await asyncExec("ipfs init");
 }
 
