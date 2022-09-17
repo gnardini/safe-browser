@@ -1,11 +1,4 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// No Node.js APIs are available in this process unless
-// nodeIntegration is set to true in webPreferences.
-// Use preload.js to selectively enable features
-// needed in the renderer process.
-
-// @ts-ignore
+ // @ts-ignore
 import { openEns } from "./dist/resolver";
 // @ts-ignore
 import { isIpfsInstalled, startIpfs } from "./dist/ipfs";
@@ -15,8 +8,9 @@ const main = document.querySelector("#main") as HTMLElement;
 const spinner = document.querySelector(".lds-ring") as HTMLElement;
 
 isIpfsInstalled().then((isInstalled: boolean) => {
-  loading.style.display = isInstalled ? "none" : "inline-block";
+  loading.style.display = isInstalled ? "none" : "flex";
   main.style.display = !isInstalled ? "none" : "flex";
+
 
   startIpfs()
     .then(() => {
