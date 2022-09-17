@@ -12,15 +12,16 @@ import { isIpfsInstalled, startIpfs } from "./dist/ipfs";
 
 const loading = document.querySelector("#loading") as HTMLElement;
 const main = document.querySelector("#main") as HTMLElement;
+const spinner = document.querySelector(".lds-ring") as HTMLElement;
 
 isIpfsInstalled().then((isInstalled: boolean) => {
   loading.style.display = isInstalled ? "none" : "inline-block";
-  main.style.display = !isInstalled ? "none" : "inline-block";
+  main.style.display = !isInstalled ? "none" : "flex";
 
   startIpfs()
     .then(() => {
       loading.style.display = "none";
-      main.style.display = "inline-block";
+      main.style.display = "flex";
     })
     .catch((e: any) => {
       // mostrar mensaje de error
@@ -37,15 +38,22 @@ searchButton?.addEventListener("click", () => {
   const ensDomain = document.querySelector(".ens-domain");
   // @ts-ignore
   const content = ensDomain.value;
-  openEns(content);
+  spinner.style.display = "inline-block";
+  openEns(content).then(() => {
+    spinner.style.display = "none";
+  });
 });
 
 popularApps?.forEach((app) => {
   app.addEventListener("click", (e) => {
     const target = e.target as HTMLElement;
+
     if (target) {
-      const ensDomain = target.dataset.ensDomain;
-      openEns(ensDomain);
+      const ensDomain = target.closest("li")?.dataset.ensDomain;
+      spinner.style.display = "inline-block";
+      openEns(ensDomain).then(() => {
+        spinner.style.display = "none";
+      });
     }
   });
 });
