@@ -31,7 +31,7 @@ h1 {
 }
 
 .search-container {
-  margin-top: 100px;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
 }
@@ -92,7 +92,9 @@ button {
 }
 
 .ens-domain {
-  width: 300px;
+  width: 340px;
+  height: 24px;
+  font-size: 16px;
 }
 
 .popular-apps {
@@ -104,6 +106,8 @@ button {
 .popular-apps-list {
   display: flex;
   padding: 0;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 20px;
 }
@@ -115,15 +119,23 @@ button {
   align-items: center;
   justify-content: center;
   width: 180px;
+  height: 200px;
   color: #33D6F5;
   border: 2px #33D6F5 solid;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.popular-apps li h3 {
+.popular-apps li {
   font-size: 18px;
   font-weight: 500;
+  margin: 10px;
+  text-align: center;
+}
+
+.popular-apps h3 {
+  font-size: 20px;
+  font-weight: 600;
   margin: 10px;
   text-align: center;
 }
@@ -137,10 +149,16 @@ button {
 
 .popular-apps li .description {
   padding: 0 10px;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .popular-apps li:hover {
   transform: scale(1.05);
+}
+
+.ens-name {
+  font-style: italic;
 }
 
 
