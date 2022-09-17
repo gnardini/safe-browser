@@ -19,7 +19,12 @@ isIpfsInstalled().then((isInstalled: boolean) => {
   loading.style.display = isInstalled ? "none" : "inline-block";
   main.style.display = !isInstalled ? "none" : "inline-block";
 
-  startIpfs().catch((e: any) => {
+  startIpfs().then(() => {
+    loading.style.display = "none";
+    main.style.display = "inline-block";
+  }).catch((e: any) => {
+    // mostrar mensaje de error
+
     console.error('Start IPFS failed')
     console.error(e)
   });

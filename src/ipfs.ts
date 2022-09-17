@@ -1,6 +1,6 @@
 // @ts-ignore
 const { exec } = require("child_process");
-var sudo = require('sudo-prompt');
+var sudo = require("sudo-prompt");
 
 export const LINUX = "linux";
 export const WINDOWS = "win32";
@@ -37,7 +37,7 @@ export async function isIpfsInstalled() {
 
 export async function startIpfs() {
   await installIpfsIfNeeded();
-  console.log(`Executing daemon`)
+  console.log(`Executing daemon`);
   asyncExec("ipfs daemon")
     .catch((e) => {
       if (!e.stderr.includes("someone else has the lock")) {
@@ -65,7 +65,7 @@ async function installIpfsForAMDMac() {
   );
   await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-amd64.tar.gz");
   await sudoForMacExec("cd ipfs/kubo && bash install.sh");
-  await initIpfs()
+  await initIpfs();
 }
 
 async function installIpfsForARMMac() {
@@ -75,7 +75,7 @@ async function installIpfsForARMMac() {
   );
   await asyncExec("cd ipfs && tar -xvzf kubo_v0.15.0_darwin-arm64.tar.gz");
   await sudoForMacExec("cd ipfs/kubo && bash install.sh");
-  await initIpfs()
+  await initIpfs();
 }
 
 async function installIpfsForLinux() {
@@ -84,16 +84,19 @@ async function installIpfsForLinux() {
     "mkdir -p ipfs && cd ipfs && wget https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_linux-amd64.tar.gz"
   );
   await asyncExec("tar -xvzf ipfs/kubo_v0.15.0_linux-amd64.tar.gz");
-  await sudoExec("cd kubo && bash install.sh");
-  await initIpfs()
+
+  const { stdout } = await asyncExec("pwd");
+  await sudoExec(`cd ${stdout.trim}/kubo && bash install.sh`);
+
+  await initIpfs();
 }
 
 async function initIpfs() {
   try {
     await asyncExec("ipfs init");
-  } catch(e: any) {
-    if (!e.stderr.includes('Error: ipfs configuration file already exists!')) {
-      throw new Error('Unexpected error when initializing ipfs')
+  } catch (e: any) {
+    if (!e.stderr.includes("Error: ipfs configuration file already exists!")) {
+      throw new Error("Unexpected error when initializing ipfs");
     }
   }
 }
@@ -118,17 +121,17 @@ function asyncExec(command: string): Promise<ExecResponse> {
 
 async function sudoExec(command: string): Promise<ExecResponse> {
   return new Promise((resolve, reject) => {
-    sudo.exec(command, { name: 'Sekura'}, (err: any, stdout: any, stderr: any) => {
+    sudo.exec(command, { name: "Sekura" }, (err: any, stdout: any, stderr: any) => {
       if (!!err) {
         console.error(err);
         reject({ err, stdout, stderr });
       }
       resolve({ err, stdout, stderr });
     });
-  })
+  });
 }
 
-async function sudoForMacExec(command: string): Promise<ExecResponse>  {
-  var prompt = `/usr/bin/osascript -e 'do shell script "bash -c \\\"${command}\\\"" with administrator privileges'`
-  return await asyncExec(prompt)
+async function sudoForMacExec(command: string): Promise<ExecResponse> {
+  var prompt = `/usr/bin/osascript -e 'do shell script "bash -c \\\"${command}\\\"" with administrator privileges'`;
+  return await asyncExec(prompt);
 }
