@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "main": "dist/main.js",
+  "description": "A safe browser",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "start": "yarn build && npx electron ./dist/main.js",
