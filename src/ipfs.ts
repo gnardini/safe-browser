@@ -83,7 +83,7 @@ async function installIpfsForLinux() {
   await asyncExec(
     "mkdir -p ~/.sekura/ipfs && cd ~/.sekura/ipfs && wget https://dist.ipfs.tech/kubo/v0.15.0/kubo_v0.15.0_linux-amd64.tar.gz"
   );
-  await asyncExec("cde ~/.sekura/ipfs && tar -xvzf kubo_v0.15.0_linux-amd64.tar.gz");
+  await asyncExec("cd ~/.sekura/ipfs && tar -xvzf kubo_v0.15.0_linux-amd64.tar.gz");
 
   const { stdout } = await asyncExec("cd ~ && pwd");
   await sudoExec(`cd ${stdout.trim()}/.sekura/ipfs/kubo && bash install.sh`);
